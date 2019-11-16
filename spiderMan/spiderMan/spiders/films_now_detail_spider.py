@@ -1,7 +1,9 @@
 import scrapy
 import re
+import json
 from ..items import FilmsNowDetailItem
 from scrapy import Request
+from ..pipelines import SpidermanPipeline
 
 #正在热映
 class FilmsNowDetailSpider(scrapy.Spider):
@@ -32,30 +34,56 @@ class FilmsNowDetailSpider(scrapy.Spider):
         item = FilmsNowDetailItem()
         if response:
             movies = response.css('div.cinemas-list')
+            cityInfo = self.getCityByCid(self.cid)
+            item['cid'] = int(cityInfo[0])
+            item['city_name'] = cityInfo[1]
             for movie in movies:
-                print(movie)
-                exit()
-                item['movieId'] = movie.css('p.name a::text').extract_first()
-                item['poi'] = movie.css('p.star::text').extract_first().strip()
-                item['cid'] = movie.css('p.releasetime::text').extract_first().strip()
-                item['poi_name'] = movie.css('i.integer::text').extract_first() + movie.css(
-                    'i.fraction::text').extract_first()
-                item['film_name'] = self.base_url + movie.css('p.name a::attr(href)').extract_first()
-                item['city_name'] = movie.css('a.image-link img.board-img::attr(data-src)').extract_first()  # 注意：需要根据网页源码写css选择器，和审查元素中的不同，估计是受JS影响
-                yield item
+                #filmNameList = response.xpath("//div[@class='channel-detail movie-item-title']/@title").getall()
+                item['poi_name'] = movie.css('div.cinema-info a::text').extract_first()
+                item['poi_addr'] = movie.css('div.cinema-info p.cinema-address::text').extract_first()
+                jsonStr = movie.css('div.cinema-info a::attr(data-val)').extract_first()
+                item['poi'] = re.match(".*?cinema_id: (\d+)", jsonStr).group(1)
+                url = self.base_url + movie.css('div.buy-btn a::attr(href)').extract_first()
+                yield scrapy.Request(url=url, callback=self.praseCiname, dont_filter=True, cookies=self.getCookies(),
+                                     meta={'item': item})
+                #yield item
             # 处理下一页
             next = response.xpath('.').re_first(r'href="(.*?)">下一页</a>')
             if next:
                 next_url = self.next_base_url + next
-                yield Request(url=next_url, callback=self.parse, dont_filter=True)
+                yield Request(url=next_url, callback=self.praseBase, dont_filter=True)
 
 
     #detail的回调
-    def praseDetail(self,response):
-        print(response)
+    def praseCiname(self,response):
+        # filename = 'test.html'
+        # with open(filename, 'wb') as f:
+        #     f.write(response.body)
+        # self.log('Saved file %s' % filename)
+        # exit()
+        item = response.meta['item']
+        if response:
+            item['poi_tel'] = response.css('div.telphone::text').extract_first()
+            item['poi_addr'] =response.css('div.address::text').extract_first()
+            movieList = response.css("div.show-list")
+            for movie in movieList:
+                item['film_name'] = movie.xpath('//div[1]/div[1]/h3/text()').extract_first()
+                item['film_score'] = movie.xpath('//div[1]/div[1]/span/text()').extract_first()
+                item['film_time'] = movie.xpath('//div[1]/span[2]/text()').extract_first()
+                item['film_type'] = movie.xpath('//div[2]/span[2]/text()').extract_first()
+                item['film_actor'] = movie.xpath('//div[3]/span[2]/text()').extract_first()
+                dateList = movie.xpath('//div[@class="show-date"]')
+                for date in dateList:
+                    index = date.xpath('//span[@class="date-item"]/*').extract_first()
+                    print(index)
+                exit()
+                dateIndex = movie.xpath('//div[2]/div[2]/span[2]/@data-index').extract_first()
+
         exit()
         pass
 
+    def parseCinameSite(self, response):
+        pass
 
     #这里cookie需要枚举，先写死
     def getCookies(self):
@@ -80,3 +108,7 @@ class FilmsNowDetailSpider(scrapy.Spider):
         movieDetailUrl = self.movive_detail_url+str(filmId)
         yield from Request(url=movieDetailUrl, callback=self.praseDetail, dont_filter=True,cookies=self.getCookies())
         pass
+
+    def getCityByCid(self, cid):
+        obj = SpidermanPipeline()
+        return obj.getCityByCid(cid)

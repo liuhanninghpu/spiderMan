@@ -9,7 +9,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/scrapy$debug.coverage" NAME="debug Coverage Results" MODIFIED="1573894388441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/scrapy$debug.coverage" NAME="debug Coverage Results" MODIFIED="1573915511870" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <splitter split-orientation="horizontal" split-proportion="0.5">
@@ -18,8 +18,29 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/spiderMan/spiderMan/spiders/films_now_detail_spider.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="552">
-                  <caret line="36" column="22" lean-forward="true" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
+                <state relative-caret-position="714">
+                  <caret line="81" column="14" lean-forward="true" selection-start-line="81" selection-start-column="14" selection-end-line="81" selection-end-column="14" />
+                  <folding>
+                    <element signature="e#0#13#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/test.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="700">
+                  <caret line="4193" column="27" selection-start-line="4193" selection-start-column="18" selection-end-line="4193" selection-end-column="27" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/spiderMan/spiderMan/spiders/films_now_spider.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="405">
+                  <caret line="57" column="103" lean-forward="true" selection-start-line="57" selection-start-column="22" selection-end-line="57" selection-end-column="103" />
                   <folding>
                     <element signature="e#0#13#0" expanded="true" />
                   </folding>
@@ -31,7 +52,7 @@
       </split-first>
       <split-second>
         <leaf>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/debug.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="243">
@@ -39,6 +60,24 @@
                   <folding>
                     <element signature="e#0#34#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/spiderMan/spiderMan/items.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="525">
+                  <caret line="34" column="13" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="13" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/spiderMan/spiderMan/middlewares.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="324">
+                  <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
                 </state>
               </provider>
             </entry>
@@ -54,12 +93,21 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>show-list</find>
+    </findStrings>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/mouseEye/mouseEye/spiders/maoyan.py" />
         <option value="$PROJECT_DIR$/catEyes/catEyes/spiders/fileLsit.py" />
         <option value="$PROJECT_DIR$/catEyes/catEyes/spiders/filmList.py" />
+        <option value="$PROJECT_DIR$/spiderMan/spiderMan/spiders/films_now_spider.py" />
+        <option value="$PROJECT_DIR$/spiderMan/spiderMan/middlewares.py" />
+        <option value="$PROJECT_DIR$/spiderMan/spiderMan/items.py" />
+        <option value="$PROJECT_DIR$/spiderMan/spiderMan/spiders/films_now_detail_spider.py" />
       </list>
     </option>
   </component>
@@ -90,6 +138,12 @@
             <path>
               <item name="scrapy" type="b2602c69:ProjectViewProjectNode" />
               <item name="scrapy" type="462c0819:PsiDirectoryNode" />
+              <item name="spiderMan" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrapy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrapy" type="462c0819:PsiDirectoryNode" />
+              <item name="spiderMan" type="462c0819:PsiDirectoryNode" />
               <item name="spiderMan" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -207,12 +261,12 @@
       <workItem from="1572075205643" duration="1373000" />
       <workItem from="1573893871378" duration="25000" />
       <workItem from="1573893908676" duration="377000" />
-      <workItem from="1573894298065" duration="107000" />
+      <workItem from="1573894298065" duration="13439000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6012000" />
+    <option name="totallyTimeSpent" value="19344000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2575" height="1415" extended-state="6" />
@@ -268,10 +322,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/spiderMan/spiderMan/middlewares.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spiderMan/spiderMan/spiders/films_now_spider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="57" column="103" lean-forward="true" selection-start-line="57" selection-start-column="22" selection-end-line="57" selection-end-column="103" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="700">
+          <caret line="4193" column="27" selection-start-line="4193" selection-start-column="18" selection-end-line="4193" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spiderMan/spiderMan/items.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="34" column="13" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/spiderMan/spiderMan/spiders/films_now_detail_spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="36" column="22" lean-forward="true" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
+        <state relative-caret-position="714">
+          <caret line="81" column="14" lean-forward="true" selection-start-line="81" selection-start-column="14" selection-end-line="81" selection-end-column="14" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

@@ -35,5 +35,11 @@ class FilmsNowDetailItem(scrapy.Item):
     show_time = scrapy.Field() #放映时间
     odd = scrapy.Field() #剩余票数
     show_date = scrapy.Field() #放映日期
+    poi_addr = scrapy.Field()#影院地址
+    poi_tel = scrapy.Field()#影院电话
+    film_type = scrapy.Field()#电影类型
+    film_time = scrapy.Field()#电影时长
+    film_actor = scrapy.Field()#电影演员
+    film_score = scrapy.Field()#电影评分
 
 

@@ -14,6 +14,7 @@ import time
 
 dynamicSpiderMap = [
     'films_citys',
+    #'films_now_detail'
     #'fims_now'
 ]
 
