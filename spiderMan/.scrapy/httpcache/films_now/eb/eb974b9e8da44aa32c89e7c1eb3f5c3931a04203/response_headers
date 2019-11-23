@@ -1,0 +1,10 @@
+Server: openresty
+Date: Fri, 01 Nov 2019 04:36:24 GMT
+Content-Type: text/html; charset=utf-8
+Strict-Transport-Security: max-age=1800
+Set-Cookie: uuid_n_v=v1; path=/; expires=Sun, 01 Dec 2019 04:36:24 GMT
+Set-Cookie: uuid=2916AD10FC6111E985953714D905CA5446EAD029D4404D679862226A2417A063; path=/; expires=Sun, 01 Dec 2019 04:36:24 GMT
+Set-Cookie: lt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly
+Set-Cookie: lt.sig=y8Z35vm0s33pZar20SZcdcJx7mE; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly
+Set-Cookie: _csrf=8c53d197e7b300a784c1ffbe01fb7f57c650a721f378ffc58e699fe1338c71b4; path=/; httponly
+Content-Encoding: gzip

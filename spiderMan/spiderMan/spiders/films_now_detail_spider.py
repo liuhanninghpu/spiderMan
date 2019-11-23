@@ -1,6 +1,7 @@
 import scrapy
 import re
 import json
+import time
 from ..items import FilmsNowDetailItem
 from scrapy import Request
 from ..pipelines import SpidermanPipeline
@@ -22,8 +23,12 @@ class FilmsNowDetailSpider(scrapy.Spider):
     # 城市ID
     cid = None
 
+    #日期
+    date = None
+
     def __init__(self, cid=None, *args, **kwargs):
         super(FilmsNowDetailSpider, self).__init__(*args, **kwargs)
+        self.date = time.strftime("%Y--%m--%d", time.localtime(time.time()))
         self.cid = cid
 
     def start_requests(self):
@@ -72,13 +77,17 @@ class FilmsNowDetailSpider(scrapy.Spider):
                 item['film_time'] = movie.xpath('//div[1]/span[2]/text()').extract_first()
                 item['film_type'] = movie.xpath('//div[2]/span[2]/text()').extract_first()
                 item['film_actor'] = movie.xpath('//div[3]/span[2]/text()').extract_first()
-                dateList = movie.xpath('//div[@class="show-date"]')
-                for date in dateList:
-                    index = date.xpath('//span[@class="date-item"]/*').extract_first()
-                    print(index)
-                exit()
-                dateIndex = movie.xpath('//div[2]/div[2]/span[2]/@data-index').extract_first()
-
+                item['show_date'] = self.date
+                showList = movie.xpath('//div[@class="plist-container active"]/table[@class="plist"]/tbody/tr')
+                for show in showList:
+                    startTime = show.xpath('//td/span[@class="begin-time"]/text()').extract_first()
+                    endTime = show.xpath('//td/span[@class="end-time"]/text()').extract_first()
+                    item['show_time'] = str(startTime)+'~'+str(endTime)
+                    item['lang_type'] =show.xpath('//td/span[@class="lang"]/text()').extract_first()
+                    item['show_place'] = show.xpath('//td/span[@class="hall"]/text()').extract_first()
+                    item['price'] = self.dealFont(show.xpath('//td/span[@class="sell-price"]/text()').extract_first())
+                    print(item)
+                    exit()
         exit()
         pass
 
