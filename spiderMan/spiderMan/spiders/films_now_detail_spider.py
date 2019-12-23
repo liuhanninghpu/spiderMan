@@ -85,9 +85,9 @@ class FilmsNowDetailSpider(scrapy.Spider):
                     item['show_time'] = str(startTime)+'~'+str(endTime)
                     item['lang_type'] =show.xpath('//td/span[@class="lang"]/text()').extract_first()
                     item['show_place'] = show.xpath('//td/span[@class="hall"]/text()').extract_first()
-                    item['price'] = self.dealFont(show.xpath('//td/span[@class="sell-price"]/text()').extract_first())
                     print(item)
                     exit()
+                    item['price'] = self.dealFont(show.xpath('//td/span[@class="sell-price"]/text()').extract_first())
         exit()
         pass
 
