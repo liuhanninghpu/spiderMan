@@ -10,8 +10,12 @@ class DiamondSpider(scrapy.Spider):
     allowed_domains = ['www.zzhgia.com']
     start_urls = ['http://www.zzhgia.com/']
     base_url = 'http://www.zzhgia.com/'
-    #一些操作的url
+
+    #登录页面的url
+    login_index = 'http://www.zzhgia.com/newManager/index.html'
+    #登录的URL
     login_url = 'http://www.zzhgia.com/login/pc/dologin_manager_specialty.xhtml'
+
 
     #登录系统的帐号密码
     load_info = {
@@ -26,19 +30,24 @@ class DiamondSpider(scrapy.Spider):
     exponent = '10001'
 
     def start_requests(self):
-        modulus = int(self.modulus,16)
-        exponent = int(self.exponent,16)
-        public_key = rsa.PublicKey(modulus,exponent)
-        password_rsa_code = binascii.b2a_hex(rsa.encrypt(self.load_info['password'].encode(),public_key))#加密信息转换成16进制
-        self.load_info['password'] = password_rsa_code
-        return [scrapy.FormRequest(self.login_url,formdata=self.load_info,callback=self.after_login)]
+        #初始化登录页面
+        return [scrapy.Request(self.login_index,callback=self.after_login_index,meta=self.load_info)]
+        # modulus = int(self.modulus,16)
+        # exponent = int(self.exponent,16)
+        # public_key = rsa.PublicKey(modulus,exponent)
+        # password_rsa_code = binascii.b2a_hex(rsa.encrypt(self.load_info['password'].encode(),public_key))#加密信息转换成16进制
+        # self.load_info['password'] = password_rsa_code
+        # return [scrapy.FormRequest(self.login_url,formdata=self.load_info,callback=self.after_login)]
 
+    def after_login_index(self,response):
+        print(response)
+        pass
 
     def after_login(self,response):
-        print(response.session)
-        print(response.body)
-        scrapy.Request(self.url_somebody, dont_filter=True, meta={'proxy': 'http://127.0.0.1:8888'})
+        #print(response.session)
+        print(response)
         exit()
+        #scrapy.Request(self.url_somebody, dont_filter=True, meta={'proxy': 'http://127.0.0.1:8888'})
         pass
 
     def parse(self, response):

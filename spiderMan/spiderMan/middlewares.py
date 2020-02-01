@@ -11,12 +11,29 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
 
+#需要动态加载的爬虫
+#主要做两件事，什么爬虫下的哪个链接需要做什么事情以及做事情需要的参数
+dynamicSpiderMap = {
+    'films_citys':[],
+    'diamond':[
+        {
+          'url':'http://www.zzhgia.com/newManager/index.html',
+          'action':'login',
+          'params':['username','password','www'],
+          'formIds':{
+              'username':'loginName',
+              'password':'loginPass',
+              'loginButton':'login_btn'
+          }
+        }
+    ] #这个需要拿到sessionStorage
+}
 
-dynamicSpiderMap = [
-    'films_citys',
-    #'films_now_detail'
-    #'fims_now'
-]
+#浏览器驱动
+webdriverFileConf = {
+    'chrome':'D:\source\scrapy\chromedriver.exe',
+    'firefox':''
+}
 
 class SpidermanSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -79,20 +96,20 @@ class SpidermanDownloaderMiddleware(object):
         return s
 
     def process_request(self, request, spider):
-        chrome_options = Options()
-        chrome_options.add_argument('--headless')  # 使用无头谷歌浏览器模式
-        chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--no-sandbox')
-        # 指定谷歌浏览器路径
-        self.driver = webdriver.Chrome(chrome_options=chrome_options,
-                                       executable_path='D:\source\scrapy\chromedriver.exe')
+        self._get_web_driver('chrome')
+        meta = None
         if spider.name in dynamicSpiderMap:
-            self.driver.get(request.url)
-            time.sleep(1)#暂停1S，避免初始化过快导致页面拉取不完整
-            html = self.driver.page_source
-            self.driver.quit()
-            return scrapy.http.HtmlResponse(url=request.url, body=html.encode('utf-8'), encoding='utf-8',
-                                            request=request)
+            for spiderConf in dynamicSpiderMap[spider.name]:
+                if spiderConf['url'] == request.url:
+                    self.driver.get(request.url)
+                    time.sleep(1)#暂停1S，避免初始化过快导致页面拉取不完整
+                    #是否有其他操作
+                    if request.meta is not None:
+                        meta = self._do_action(spiderConf,request)
+                    html = self.driver.page_source
+                    self.driver.quit()
+                    return scrapy.http.HtmlResponse(url=request.url, body=html.encode('utf-8'), encoding='utf-8',
+                                                    request=request,meta=meta)
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
@@ -115,3 +132,42 @@ class SpidermanDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+    #获取浏览器模式
+    def _get_web_driver(self,type):
+        web_driver_options = Options()
+        web_driver_options.add_argument('--headless')  # 使用无头谷歌浏览器模式
+        web_driver_options.add_argument('--disable-gpu')
+        web_driver_options.add_argument('--no-sandbox')
+        # 指定浏览器路径
+        self.driver = webdriver.Chrome(chrome_options=web_driver_options,
+                                       executable_path=webdriverFileConf[type])
+
+    #做操作
+    def _do_action(self,conf,request):
+        request_url,request_meta = request.url,request.meta
+        conf_url,conf_action,conf_params,conf_form_ids = conf['url'],conf['action'],conf['params'],conf['formIds']
+        if request_url != conf_url:
+            return None
+        if conf_action is None:
+            return None
+        if conf_action == 'login':
+            #做模拟登录操作
+            # 填写用户名
+            print(request_meta)
+            print(conf_form_ids)
+            for key,val in enumerate(conf_form_ids):
+                print(key)
+                print(val)
+                exit()
+                #self.driver.find_element_by_id(id).send_keys(username)
+            # self.driver.find_element_by_id("txtUserName").send_keys(username)
+            # # 填写密码
+            # self.driver.find_element_by_id("txtPassword").send_keys(password)
+            # # 点击登录
+            # self.driver.find_element_by_id("btnLogin").click()
+        else:
+            #后续有新的再加上
+            pass
+
+
