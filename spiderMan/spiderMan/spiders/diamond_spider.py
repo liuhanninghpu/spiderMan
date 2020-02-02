@@ -1,9 +1,11 @@
 import scrapy
-from ..items import FilmsCityItem
 import rsa
 import binascii
 from scrapy.http.cookies import CookieJar
-
+from scrapy_splash import SplashRequest
+from scrapy_splash import SplashMiddleware
+from scrapy_splash import SplashRequest
+from scrapy.selector import Selector
 
 class DiamondSpider(scrapy.Spider):
     name = "diamond"
@@ -31,16 +33,21 @@ class DiamondSpider(scrapy.Spider):
 
     def start_requests(self):
         #初始化登录页面
-        return [scrapy.Request(self.login_index,callback=self.after_login_index,meta=self.load_info)]
+        #return [scrapy.Request(self.login_index,callback=self.after_login_index,meta=self.load_info)]
         # modulus = int(self.modulus,16)
         # exponent = int(self.exponent,16)
         # public_key = rsa.PublicKey(modulus,exponent)
         # password_rsa_code = binascii.b2a_hex(rsa.encrypt(self.load_info['password'].encode(),public_key))#加密信息转换成16进制
         # self.load_info['password'] = password_rsa_code
         # return [scrapy.FormRequest(self.login_url,formdata=self.load_info,callback=self.after_login)]
+        yield SplashRequest(self.login_index
+                                , self.after_login_index
+                                , args={'wait': '2'}
+                                ,endpoint='execute'
+                                )
 
     def after_login_index(self,response):
-        print(response)
+        print(response.html())
         pass
 
     def after_login(self,response):
@@ -51,12 +58,13 @@ class DiamondSpider(scrapy.Spider):
         pass
 
     def parse(self, response):
-        item = FilmsCityItem()
-        if response:
-            citysDomName = response.xpath('//a[@class="js-city-name"]/text()').getall()
-            citysDomId = response.xpath('//a/@data-ci').getall()
-            citysMap = dict(zip(citysDomId,citysDomName))
-            for cityId,cityName in citysMap.items():
-                item['city_name'] = cityName
-                item['cid'] = cityId
-                yield item
+        pass
+        # item = FilmsCityItem()
+        # if response:
+        #     citysDomName = response.xpath('//a[@class="js-city-name"]/text()').getall()
+        #     citysDomId = response.xpath('//a/@data-ci').getall()
+        #     citysMap = dict(zip(citysDomId,citysDomName))
+        #     for cityId,cityName in citysMap.items():
+        #         item['city_name'] = cityName
+        #         item['cid'] = cityId
+        #         yield item
